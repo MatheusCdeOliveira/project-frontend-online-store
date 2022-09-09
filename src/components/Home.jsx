@@ -1,12 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { Link, Redirect } from 'react-router-dom';
+import {
+  getCategories, getProductsFromCategoryAndQuery,
+} from '../services/api';
 
 class Home extends React.Component {
   state = {
     categoriesList: [],
     inputSearch: '',
     productList: [],
+    buttonSubmit: false,
+    productId: '',
   };
 
   async componentDidMount() {
@@ -31,8 +36,16 @@ class Home extends React.Component {
     this.setState({ productList: response.results });
   };
 
+  HandleDetails = async ({ target }) => {
+    this.setState({
+      productId: target.id,
+      buttonSubmit: true,
+    });
+  };
+
   render() {
-    const { categoriesList, inputSearch, productList } = this.state;
+    const { categoriesList,
+      inputSearch, productList, buttonSubmit, productId } = this.state;
     return (
       <section>
         <Link to="/carrinho" data-testid="shopping-cart-button">
@@ -53,7 +66,6 @@ class Home extends React.Component {
             onClick={ this.handleClick }
           >
             Search
-
           </button>
         </div>
         <nav>
@@ -70,7 +82,8 @@ class Home extends React.Component {
                   />
                   {element.name}
                 </label>
-              </li>))}
+              </li>
+            ))}
           </ul>
         </nav>
         <ul>
@@ -88,14 +101,29 @@ class Home extends React.Component {
                     <img src={ item.thumbnail } alt={ item.title } />
                     <p>{item.price}</p>
                   </div>
+                  <button
+                    type="button"
+                    id={ item.id }
+                    data-testid="product-detail-link"
+                    onClick={ this.HandleDetails }
+                  >
+                    Details
+                  </button>
                 </li>
               ))}
             </ul>
-          ) : <p>Nenhum produto foi encontrado</p>}
+          ) : (
+            <p>Nenhum produto foi encontrado</p>
+          )}
         </div>
+        {buttonSubmit && <Redirect to={ `/card/${productId}` } />}
       </section>
     );
   }
 }
-
+Home.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 export default Home;
