@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends React.Component {
   state = {
     categoriesList: [],
+    inputSearch: '',
+    productList: [],
   };
 
   async componentDidMount() {
@@ -12,13 +14,43 @@ class Home extends React.Component {
     this.setState({ categoriesList: listagem });
   }
 
+  handleClick = async () => {
+    const { inputSearch } = this.state;
+    const response = await getProductsFromCategoryAndQuery(inputSearch);
+    this.setState({ productList: response.results });
+    console.log(response);
+  };
+
+  handleChange = ({ target }) => {
+    const { value } = target;
+    this.setState({ inputSearch: value });
+  };
+
   render() {
-    const { categoriesList } = this.state;
+    const { categoriesList, inputSearch, productList } = this.state;
     return (
       <section>
         <Link to="/carrinho" data-testid="shopping-cart-button">
           Carrinho de Compras
         </Link>
+        <div>
+          <input
+            type="text"
+            name=""
+            data-testid="query-input"
+            id=""
+            value={ inputSearch }
+            onChange={ this.handleChange }
+          />
+          <button
+            type="button"
+            data-testid="query-button"
+            onClick={ this.handleClick }
+          >
+            Search
+
+          </button>
+        </div>
         <nav>
           <ul>
             {categoriesList.map((element) => (
@@ -35,6 +67,21 @@ class Home extends React.Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         </ul>
+        <div>
+          {productList.length > 0 ? (
+            <ul>
+              {productList.map((item) => (
+                <li key={ item.id }>
+                  <div data-testid="product">
+                    <p>{item.title}</p>
+                    <img src={ item.thumbnail } alt={ item.title } />
+                    <p>{item.price}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : <p>Nenhum produto foi encontrado</p>}
+        </div>
       </section>
     );
   }
