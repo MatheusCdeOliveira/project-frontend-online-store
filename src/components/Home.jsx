@@ -18,12 +18,17 @@ class Home extends React.Component {
     const { inputSearch } = this.state;
     const response = await getProductsFromCategoryAndQuery(inputSearch);
     this.setState({ productList: response.results });
-    console.log(response);
   };
 
-  handleChange = ({ target }) => {
+  inputHandleChange = ({ target }) => {
     const { value } = target;
     this.setState({ inputSearch: value });
+  };
+
+  radioHandleChange = async ({ target }) => {
+    const { value } = target;
+    const response = await getProductsFromCategoryAndQuery(value);
+    this.setState({ productList: response.results });
   };
 
   render() {
@@ -40,7 +45,7 @@ class Home extends React.Component {
             data-testid="query-input"
             id=""
             value={ inputSearch }
-            onChange={ this.handleChange }
+            onChange={ this.inputHandleChange }
           />
           <button
             type="button"
@@ -56,7 +61,13 @@ class Home extends React.Component {
             {categoriesList.map((element) => (
               <li key={ element.id }>
                 <label htmlFor={ element.id } data-testid="category">
-                  <input type="radio" name={ element.name } id={ element.id } />
+                  <input
+                    type="radio"
+                    name="category"
+                    id={ element.id }
+                    onChange={ this.radioHandleChange }
+                    value={ element.name }
+                  />
                   {element.name}
                 </label>
               </li>))}
