@@ -40,3 +40,142 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background: #ECECEC;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #282c34;
+  color: white;
+}
+
+.carrinhoLink {
+  text-decoration: none;
+  color: white;
+}
+
+.container-Lists {
+  display: flex;
+  justify-content: space-around;
+}
+
+.radio {
+  display: flex;
+ margin-top: 60px;
+ background: white;
+
+}
+
+.borderTitle {
+border-bottom: 1px solid #B0B3BB;
+width: 100%;
+margin-bottom: 40px;
+}
+
+.listRadio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  padding-right: 60px;
+  padding-left: 30px;
+  width: 300px;
+}
+
+li {
+  list-style-type: none;
+  margin-bottom: 30px;
+}
+
+.container-ListProducts {
+  margin-top: 50px;
+   display: flex;
+   justify-content: flex-end;
+   flex-wrap: wrap;
+}
+
+.produtos {
+  padding: 60px;
+  padding-bottom: 200px;
+  margin: 30px;
+width: 279.6px;
+height: 358.7px;
+left: 959px;
+top: 190px;
+background: #FFFFFF;
+
+}
+
+.container-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+
+.container-nomeImage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 80px;
+  width: 488px;
+  height: 516px;
+  left: 38px;
+  top: 171px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.nome {
+  display: flex;
+  align-self: start;
+  text-align: center;
+  margin: 40px;
+}
+
+.image {
+  display: flex;
+  width: 300px;
+}
+
+.container-price {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  bottom: 0%;
+  width: 1000px;
+  height: 607px;
+  left: 563px;
+  top: 70px;
+  overflow: auto;
+background: #FFFFFF;
+}
+
+.price {
+  display: flex;
+  align-self: flex-start;
+  margin-left: 100px;
+  margin-right: 10px;
+  margin-top: 50%;
+}
+
+.carrinho {
+   text-decoration: none;
+   display: flex;
+   align-self: flex-end;
+   margin-right: 10%;
+   margin-bottom: 85px;
+  color: #282c34;
+  border: 2px solid #282c34;
+  background: rgb(191, 133, 25);
+  padding: 1px 90px;
+  border-radius: 6px;
+}
