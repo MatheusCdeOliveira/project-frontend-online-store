@@ -37,7 +37,7 @@ class Card extends React.Component {
     const value = {
       name: productName,
       price: productPrice,
-      image: productImage,
+      imagem: productImage,
       quant: 1,
     };
     addCarrinho.push(value);
