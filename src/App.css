@@ -140,23 +140,16 @@ background: #FFFFFF;
   margin: 40px;
 }
 
-.image {
-  display: flex;
-  width: 300px;
-}
-
 .container-price {
   align-items: flex-start;
   display: flex;
   justify-content: flex-start;
-  flex-direction: row;
-  bottom: 0%;
   width: 1000px;
   height: 607px;
   left: 563px;
   top: 70px;
   overflow: auto;
-background: #FFFFFF;
+  background: #FFFFFF;
 }
 
 .price {
@@ -178,10 +171,29 @@ background: #FFFFFF;
   background: rgb(191, 133, 25);
   padding: 1px 90px;
   border-radius: 6px;
+  margin-top: 50%;
 }
+
 .container-carrinho {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 200px;
+}
+
+img {
+ display: flex;
+  width: 300px;
+  border-radius: 30%;
+}
+
+.buttonCarrinho {
+   display: flex;
+   background: rgb(191, 133, 25);
+  align-self: flex-start;
+  border: 2px solid #282c34;
+  border-radius: 6px;
+  margin-left: 100px;
+  margin-right: 40px;
+  margin-top: 50%;
 }
