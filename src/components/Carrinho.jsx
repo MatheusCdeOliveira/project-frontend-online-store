@@ -53,6 +53,7 @@ class Carrinho extends React.Component {
                   {
                     produtos.map((prod, index) => (
                       <li key={ index }>
+                        <img src={ prod.imagem } alt={ prod.name } />
                         <span data-testid="shopping-cart-product-name">{prod.name}</span>
                         <button
                           id={ prod.id }
@@ -84,7 +85,6 @@ class Carrinho extends React.Component {
                         >
                           x
                         </button>
-
                       </li>
                     ))
                   }

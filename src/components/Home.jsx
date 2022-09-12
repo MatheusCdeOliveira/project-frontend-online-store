@@ -55,6 +55,7 @@ class Home extends React.Component {
       id: item.id,
       name: item.title,
       price: item.price,
+      image: item.thumbnail,
       quant: 1,
     };
     return value;

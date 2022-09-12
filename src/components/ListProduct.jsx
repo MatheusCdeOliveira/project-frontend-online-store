@@ -18,7 +18,7 @@ class ListProduct extends React.Component {
                 <li key={ item.id } className="produtos">
                   <div data-testid="product">
                     <h1>{item.title}</h1>
-                    <img src={ item.thumbnail } alt={ item.title } className="image" />
+                    <img src={ item.thumbnail } alt={ item.title } />
                     <p>{ `R$${item.price}`}</p>
                   </div>
                   <button

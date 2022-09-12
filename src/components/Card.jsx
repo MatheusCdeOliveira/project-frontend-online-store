@@ -11,21 +11,45 @@ class Card extends React.Component {
     productImage: '',
     productPrice: 0,
     fichaTecnica: [],
+    carrinho: [],
   };
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const product = await getProductById(id);
+    console.log(product);
     this.setState({
       productName: product.title,
       productImage: product.thumbnail,
       productPrice: product.price,
       fichaTecnica: product.attributes,
     });
+    let carrinho = [];
+    if (localStorage.getItem('carrinho')) {
+      carrinho = JSON.parse(localStorage.getItem('carrinho'));
+    }
+    this.setState({ carrinho });
   }
 
+  ClickLocalStorage = () => {
+    const { productName, productPrice, productImage, carrinho } = this.state;
+    const addCarrinho = [...carrinho];
+    const value = {
+      name: productName,
+      price: productPrice,
+      imagem: productImage,
+      quant: 1,
+    };
+    addCarrinho.push(value);
+    localStorage.setItem('carrinho', JSON.stringify(addCarrinho));
+    this.setState((prevState) => ({
+      carrinho: [...prevState.carrinho, value],
+    }));
+  };
+
   render() {
-    const { productName, productImage, productPrice, fichaTecnica } = this.state;
+    const {
+      productName, productImage, productPrice, fichaTecnica } = this.state;
     return (
       <section>
         <Header />
@@ -56,6 +80,14 @@ class Card extends React.Component {
             >
               <strong>{`R$: ${productPrice}`}</strong>
             </p>
+            <button
+              className="buttonCarrinho"
+              type="button"
+              onClick={ this.ClickLocalStorage }
+              data-testid="product-detail-add-to-cart"
+            >
+              Adicionar ao Carrinho
+            </button>
             <Link
               // data-testid="shopping-cart-button"
               to="/carrinho"
