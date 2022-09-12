@@ -22,7 +22,7 @@ class Carrinho extends React.Component {
           produtos
             ? (
               <div>
-                <ul>
+                <ul className="container-carrinho">
                   {
                     produtos.map((prod, index) => (
                       <li key={ index }>
