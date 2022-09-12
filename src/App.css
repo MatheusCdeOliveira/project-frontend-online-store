@@ -42,23 +42,23 @@
 }
 
 body {
-  background: #ECECEC;
+  background: rgb(236, 236, 236);
 }
 
 header {
-  position: fixed;
-  width: 100%;
-  top: 0%;
+  align-items: center;
+  background: #282c34;
+  color: white;
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+  position: fixed;
+  top: 0%;
+  width: 100%;
 }
 
 .carrinhoLink {
-  text-decoration: none;
   color: white;
+  text-decoration: none;
 }
 
 .container-Lists {
@@ -67,25 +67,23 @@ header {
 }
 
 .radio {
+  background: white;
   display: flex;
- margin-top: 60px;
- background: white;
-
+  margin-top: 60px;
 }
 
 .borderTitle {
-border-bottom: 1px solid #B0B3BB;
-width: 100%;
-margin-bottom: 40px;
+  border-bottom: 1px solid rgb(176, 179, 187);
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 .listRadio {
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
+  padding: 0 30px;
   padding-right: 60px;
-  padding-left: 30px;
   width: 300px;
 }
 
@@ -95,104 +93,103 @@ li {
 }
 
 .container-ListProducts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   margin-top: 50px;
-   display: flex;
-   justify-content: flex-end;
-   flex-wrap: wrap;
 }
 
 .produtos {
+  background: white;
+  height: 358px;
+  left: 959px;
+  margin: 30px;
   padding: 60px;
   padding-bottom: 200px;
-  margin: 30px;
-width: 279.6px;
-height: 358.7px;
-left: 959px;
-top: 190px;
-background: #FFFFFF;
-
+  top: 190px;
+  width: 279.6px;
 }
 
 .container-details {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: space-between;
   margin-top: 60px;
 }
 
 .container-nomeImage {
-  display: flex;
   align-items: center;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  display: flex;
   flex-direction: column;
-  margin-left: 80px;
-  width: 488px;
   height: 516px;
   left: 38px;
+  margin-left: 80px;
   top: 171px;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+  width: 488px;
 }
 
 .nome {
-  display: flex;
   align-self: start;
-  text-align: center;
+  display: flex;
   margin: 40px;
+  text-align: center;
 }
 
 .container-price {
   align-items: flex-start;
+  background: white;
   display: flex;
-  justify-content: flex-start;
-  width: 1000px;
   height: 607px;
+  justify-content: flex-start;
   left: 563px;
-  top: 70px;
   overflow: auto;
-  background: #FFFFFF;
+  top: 70px;
+  width: 1000px;
 }
 
 .price {
-  display: flex;
   align-self: flex-start;
+  display: flex;
   margin-left: 100px;
   margin-right: 10px;
   margin-top: 50%;
 }
 
 .carrinho {
-   text-decoration: none;
-   display: flex;
-   align-self: flex-end;
-   margin-right: 10%;
-   margin-bottom: 85px;
-  color: #282c34;
-  border: 2px solid #282c34;
+  align-self: flex-end;
   background: rgb(191, 133, 25);
-  padding: 1px 90px;
+  border: 2px solid #282c34;
   border-radius: 6px;
+  color: #282c34;
+  display: flex;
+  margin-bottom: 85px;
+  margin-right: 10%;
   margin-top: 50%;
+  padding: 1px 90px;
+  text-decoration: none;
 }
 
 .container-carrinho {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   margin-top: 200px;
 }
 
 img {
- display: flex;
-  width: 300px;
   border-radius: 30%;
+  display: flex;
+  width: 300px;
 }
 
 .buttonCarrinho {
-   display: flex;
-   background: rgb(191, 133, 25);
   align-self: flex-start;
+  background: rgb(191, 133, 25);
   border: 2px solid #282c34;
   border-radius: 6px;
+  display: flex;
   margin-left: 100px;
   margin-right: 40px;
   margin-top: 50%;
