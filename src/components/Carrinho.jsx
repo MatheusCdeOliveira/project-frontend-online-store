@@ -15,7 +15,6 @@ class Carrinho extends React.Component {
 
   render() {
     const { produtos } = this.state;
-    console.log(produtos.map((el) => el.image));
     return (
       <div>
         <Header />
@@ -28,7 +27,7 @@ class Carrinho extends React.Component {
                     produtos.map((prod, index) => (
                       <li key={ index }>
                         <p data-testid="shopping-cart-product-name">{prod.name}</p>
-                        <img src={ prod.image } alt={ prod.name } />
+                        <img src={ prod.imagem } alt={ prod.name } />
                         <p>{`R$:${prod.price}`}</p>
                         <p data-testid="shopping-cart-product-quantity">{prod.quant}</p>
                       </li>
