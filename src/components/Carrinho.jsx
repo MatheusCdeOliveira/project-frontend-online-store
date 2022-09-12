@@ -13,6 +13,33 @@ class Carrinho extends React.Component {
     });
   }
 
+  dimQuantNoCarrinho = ({ target }) => {
+    const { produtos } = this.state;
+    produtos.forEach((prod) => {
+      if ((prod.id === target.id) && (prod.quant - 1 > 0)) prod.quant -= 1;
+    });
+    this.setState({ produtos });
+    localStorage.setItem('carrinho', JSON.stringify(produtos));
+  };
+
+  aumQuantNoCarrinho = ({ target }) => {
+    const { produtos } = this.state;
+    produtos.forEach((prod) => {
+      if (prod.id === target.id) prod.quant += 1;
+    });
+    this.setState({ produtos });
+    localStorage.setItem('carrinho', JSON.stringify(produtos));
+  };
+
+  remProdCarrinho = ({ target }) => {
+    const { produtos } = this.state;
+    produtos.forEach((prod, index) => {
+      if (prod.id === target.id) produtos.splice(index, 1);
+    });
+    this.setState({ produtos });
+    localStorage.setItem('carrinho', JSON.stringify(produtos));
+  };
+
   render() {
     const { produtos } = this.state;
     return (
@@ -26,10 +53,38 @@ class Carrinho extends React.Component {
                   {
                     produtos.map((prod, index) => (
                       <li key={ index }>
-                        <p data-testid="shopping-cart-product-name">{prod.name}</p>
                         <img src={ prod.imagem } alt={ prod.name } />
-                        <p>{`R$:${prod.price}`}</p>
-                        <p data-testid="shopping-cart-product-quantity">{prod.quant}</p>
+                        <span data-testid="shopping-cart-product-name">{prod.name}</span>
+                        <button
+                          id={ prod.id }
+                          type="button"
+                          data-testid="product-decrease-quantity"
+                          onClick={ this.dimQuantNoCarrinho }
+                        >
+                          -
+                        </button>
+                        <span
+                          data-testid="shopping-cart-product-quantity"
+                        >
+                          {prod.quant}
+                        </span>
+                        <button
+                          id={ prod.id }
+                          type="button"
+                          data-testid="product-increase-quantity"
+                          onClick={ this.aumQuantNoCarrinho }
+                        >
+                          +
+                        </button>
+                        <span>{`R$:${prod.price}`}</span>
+                        <button
+                          id={ prod.id }
+                          type="button"
+                          data-testid="remove-product"
+                          onClick={ this.remProdCarrinho }
+                        >
+                          x
+                        </button>
                       </li>
                     ))
                   }

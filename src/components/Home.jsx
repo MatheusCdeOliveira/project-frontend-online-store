@@ -50,21 +50,35 @@ class Home extends React.Component {
     });
   };
 
-  HandleLocalStorage = ({ target }) => {
-    const { productList, carrinho } = this.state;
-    const newCarrinho = [...carrinho];
-    const item = productList.find((elem) => elem.id === target.id);
+  criaNovoProdCarrinho = (item) => {
     const value = {
+      id: item.id,
       name: item.title,
       price: item.price,
       image: item.thumbnail,
       quant: 1,
     };
-    newCarrinho.push(value);
-    localStorage.setItem('carrinho', JSON.stringify(newCarrinho));
-    this.setState((prevState) => ({
-      carrinho: [...prevState.carrinho, value],
-    }));
+    return value;
+  };
+
+  HandleLocalStorage = ({ target }) => {
+    const { productList, carrinho } = this.state;
+    const item = productList.find((elem) => elem.id === target.id);
+    if (carrinho.length > 0) {
+      if (carrinho.some((elem) => elem.id === item.id)) {
+        carrinho.forEach((prod) => {
+          if (prod.id === item.id) prod.quant += 1;
+        });
+      } else {
+        const value = this.criaNovoProdCarrinho(item);
+        carrinho.push(value);
+      }
+    } else {
+      const value = this.criaNovoProdCarrinho(item);
+      carrinho.push(value);
+    }
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    this.setState({ carrinho });
   };
 
   render() {
