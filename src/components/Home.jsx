@@ -57,6 +57,7 @@ class Home extends React.Component {
     const value = {
       name: item.title,
       price: item.price,
+      image: item.thumbnail,
       quant: 1,
     };
     newCarrinho.push(value);
