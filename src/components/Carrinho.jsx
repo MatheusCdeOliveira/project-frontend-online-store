@@ -15,7 +15,6 @@ class Carrinho extends React.Component {
 
   render() {
     const { produtos } = this.state;
-    console.log(produtos.map((el) => el.image));
     return (
       <div>
         <Header />
