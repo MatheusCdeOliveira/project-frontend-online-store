@@ -179,3 +179,9 @@ background: #FFFFFF;
   padding: 1px 90px;
   border-radius: 6px;
 }
+.container-carrinho {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 100px;
+}
