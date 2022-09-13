@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
-
+import Evaluation from './Evaluation';
 import Header from './Header';
+import addItemAoCarrinho from '../utils';
 
 class Card extends React.Component {
   state = {
@@ -17,6 +18,7 @@ class Card extends React.Component {
     rating: 0,
     avaliationInfo: [],
     inputValidation: false,
+    carrinho: [],
   };
 
   async componentDidMount() {
@@ -34,7 +36,30 @@ class Card extends React.Component {
     if (!localStorage.getItem(product.id)) {
       this.setState({ avaliationInfo: [] });
     }
+    let carrinho = [];
+    if (localStorage.getItem('carrinho')) {
+      carrinho = JSON.parse(localStorage.getItem('carrinho'));
+    }
+    this.setState({ carrinho });
   }
+
+  createItem = (id, title, price, thumbnail) => {
+    const item = {
+      id,
+      title,
+      price,
+      thumbnail,
+    };
+    return item;
+  };
+
+  ClickLocalStorage = () => {
+    const { productId, productName, productPrice, productImage, carrinho } = this.state;
+    const item = this.createItem(productId, productName, productPrice, productImage);
+    const newCarrinho = addItemAoCarrinho(item, carrinho);
+    localStorage.setItem('carrinho', JSON.stringify(newCarrinho));
+    this.setState({ carrinho: newCarrinho });
+  };
 
   handleEmail = ({ target }) => {
     const { value } = target;
@@ -107,8 +132,15 @@ class Card extends React.Component {
             >
               <strong>{`R$: ${productPrice}`}</strong>
             </p>
+            <button
+              className="buttonCarrinho"
+              type="button"
+              onClick={ this.ClickLocalStorage }
+              data-testid="product-detail-add-to-cart"
+            >
+              Adicionar ao Carrinho
+            </button>
             <Link
-              // data-testid="shopping-cart-button"
               to="/carrinho"
               className="carrinho"
             >
@@ -116,108 +148,16 @@ class Card extends React.Component {
             </Link>
           </article>
         </section>
-        <section className="evaluation-form">
-          <form>
-            <label htmlFor="input-email">
-              <input
-                type="email"
-                value={ inputEmail }
-                data-testid="product-detail-email"
-                name="input-email"
-                id="input-email"
-                placeholder="Email"
-                onChange={ this.handleEmail }
-              />
-            </label>
-            <label htmlFor="one">
-              1
-              <input
-                data-testid="1-rating"
-                type="checkbox"
-                onChange={ this.handleCheck }
-                name="one"
-                value="1"
-                id="one"
-              />
-            </label>
-            <label htmlFor="two">
-              2
-              <input
-                data-testid="2-rating"
-                type="checkbox"
-                onChange={ this.handleCheck }
-                name="two"
-                value="2"
-                id="two"
-              />
-            </label>
-            <label htmlFor="three">
-              3
-              <input
-                data-testid="3-rating"
-                type="checkbox"
-                onChange={ this.handleCheck }
-                name="three"
-                value="3"
-                id="three"
-              />
-            </label>
-            <label htmlFor="four">
-              4
-              <input
-                data-testid="4-rating"
-                type="checkbox"
-                onChange={ this.handleCheck }
-                name="four"
-                value="4"
-                id="four"
-              />
-            </label>
-            <label htmlFor="five">
-              5
-              <input
-                data-testid="5-rating"
-                type="checkbox"
-                onChange={ this.handleCheck }
-                name="five"
-                value="5"
-                id="five"
-              />
-            </label>
-            <textarea
-              name=""
-              value={ textarea }
-              placeholder="Mensagem (opcional)"
-              id=""
-              data-testid="product-detail-evaluation"
-              cols="30"
-              rows="10"
-              onChange={ this.handleText }
-            />
-            <button
-              data-testid="submit-review-btn"
-              type="submit"
-              onClick={ this.handleSubmit }
-            >
-              Avaliar
-
-            </button>
-          </form>
-        </section>
-        {inputValidation && <p data-testid="error-msg">Campos inválidos</p>}
-        <section className="review">
-          <ul>
-            {avaliationInfo.map((item, index) => (
-              <li key={ index }>
-                <div>
-                  <p data-testid="review-card-email">{item.email}</p>
-                  <p data-testid="review-card-rating">{item.rate}</p>
-                  <p data-testid="review-card-evaluation">{item.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <Evaluation
+          handleEmail={ this.handleEmail }
+          handleText={ this.handleText }
+          handleCheck={ this.handleCheck }
+          handleSubmit={ this.handleSubmit }
+          inputEmail={ inputEmail }
+          textarea={ textarea }
+          avaliationInfo={ avaliationInfo }
+          inputValidation={ inputValidation }
+        />
       </section>
     );
   }
