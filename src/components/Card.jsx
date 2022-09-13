@@ -8,7 +8,6 @@ import addItemAoCarrinho from '../utils';
 
 class Card extends React.Component {
   state = {
-    productId: '',
     productName: '',
     productImage: '',
     productPrice: 0,
