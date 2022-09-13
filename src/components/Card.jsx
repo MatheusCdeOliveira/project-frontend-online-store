@@ -30,7 +30,6 @@ class Card extends React.Component {
       productId: product.id,
     });
     const recoverInfo = await JSON.parse(localStorage.getItem(product.id));
-    // console.log(recoverInfo);
     this.setState({ avaliationInfo: recoverInfo });
     if (!localStorage.getItem(product.id)) {
       this.setState({ avaliationInfo: [] });
