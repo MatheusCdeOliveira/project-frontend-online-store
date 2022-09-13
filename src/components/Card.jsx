@@ -2,17 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
-import { addItemAoCarrinho } from '../utils';
-
+import Evaluation from './Evaluation';
 import Header from './Header';
+import addItemAoCarrinho from '../utils';
 
 class Card extends React.Component {
   state = {
-    productId: '',
     productName: '',
     productImage: '',
     productPrice: 0,
+    productId: '',
     fichaTecnica: [],
+    inputEmail: '',
+    textarea: '',
+    rating: 0,
+    avaliationInfo: [],
+    inputValidation: false,
     carrinho: [],
   };
 
@@ -21,12 +26,17 @@ class Card extends React.Component {
     const product = await getProductById(id);
     console.log(product);
     this.setState({
-      productId: product.id,
       productName: product.title,
       productImage: product.thumbnail,
       productPrice: product.price,
       fichaTecnica: product.attributes,
+      productId: product.id,
     });
+    const recoverInfo = await JSON.parse(localStorage.getItem(product.id));
+    this.setState({ avaliationInfo: recoverInfo });
+    if (!localStorage.getItem(product.id)) {
+      this.setState({ avaliationInfo: [] });
+    }
     let carrinho = [];
     if (localStorage.getItem('carrinho')) {
       carrinho = JSON.parse(localStorage.getItem('carrinho'));
@@ -52,9 +62,47 @@ class Card extends React.Component {
     this.setState({ carrinho: newCarrinho });
   };
 
+  handleEmail = ({ target }) => {
+    const { value } = target;
+    this.setState({ inputEmail: value });
+  };
+
+  handleText = ({ target }) => {
+    const { value } = target;
+    this.setState({ textarea: value });
+  };
+
+  handleCheck = (event) => {
+    this.setState({ rating: event.target.value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { inputEmail,
+      textarea, productId, avaliationInfo, rating } = this.state;
+    if (rating !== 0) {
+      this.setState({ inputValidation: false }, () => {
+        const products = [...avaliationInfo];
+        const product = {
+          email: inputEmail,
+          text: textarea,
+          rate: rating,
+        };
+        products.push(product);
+        localStorage.setItem(productId, JSON.stringify(products));
+        this.setState({ avaliationInfo: [...products], inputEmail: '', textarea: '' });
+      });
+    } else if (!(inputEmail.length > 0
+       && inputEmail.includes('@') && textarea.length > 0)) {
+      this.setState({ inputValidation: true });
+    }
+  };
+
   render() {
-    const {
-      productName, productImage, productPrice, fichaTecnica } = this.state;
+    const { productName,
+      productImage,
+      productPrice,
+      fichaTecnica, inputEmail, textarea, avaliationInfo, inputValidation } = this.state;
     return (
       <section>
         <Header />
@@ -94,7 +142,6 @@ class Card extends React.Component {
               Adicionar ao Carrinho
             </button>
             <Link
-              // data-testid="shopping-cart-button"
               to="/carrinho"
               className="carrinho"
             >
@@ -102,6 +149,16 @@ class Card extends React.Component {
             </Link>
           </article>
         </section>
+        <Evaluation
+          handleEmail={ this.handleEmail }
+          handleText={ this.handleText }
+          handleCheck={ this.handleCheck }
+          handleSubmit={ this.handleSubmit }
+          inputEmail={ inputEmail }
+          textarea={ textarea }
+          avaliationInfo={ avaliationInfo }
+          inputValidation={ inputValidation }
+        />
       </section>
     );
   }

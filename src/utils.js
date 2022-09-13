@@ -1,4 +1,4 @@
-function criaNovoProdCarrinho(item){
+function criaNovoProdCarrinho(item) {
   const value = {
     id: item.id,
     name: item.title,
@@ -7,9 +7,9 @@ function criaNovoProdCarrinho(item){
     quant: 1,
   };
   return value;
-};
+}
 
-export function addItemAoCarrinho(item, carrinho){
+export default function addItemAoCarrinho(item, carrinho) {
   if (carrinho.length > 0) {
     if (carrinho.some((elem) => elem.id === item.id)) {
       carrinho.forEach((prod) => {
@@ -24,4 +24,4 @@ export function addItemAoCarrinho(item, carrinho){
     carrinho.push(value);
   }
   return carrinho;
-};
+}

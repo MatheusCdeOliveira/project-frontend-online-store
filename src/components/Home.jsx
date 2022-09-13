@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-import { addItemAoCarrinho } from '../utils';
+import addItemAoCarrinho from '../utils';
 
 import Header from './Header';
 import ListProduct from './ListProduct';
