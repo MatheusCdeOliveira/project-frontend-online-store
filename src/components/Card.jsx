@@ -26,7 +26,6 @@ class Card extends React.Component {
     const product = await getProductById(id);
     console.log(product);
     this.setState({
-      productId: product.id,
       productName: product.title,
       productImage: product.thumbnail,
       productPrice: product.price,
