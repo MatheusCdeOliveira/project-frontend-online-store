@@ -25,4 +25,3 @@ export default function addItemAoCarrinho(item, carrinho) {
   }
   return carrinho;
 }
-
