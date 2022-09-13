@@ -8,6 +8,7 @@ import addItemAoCarrinho from '../utils';
 
 class Card extends React.Component {
   state = {
+    productId: '',
     productName: '',
     productImage: '',
     productPrice: 0,
@@ -24,7 +25,9 @@ class Card extends React.Component {
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const product = await getProductById(id);
+    console.log(product);
     this.setState({
+      productId: product.id,
       productName: product.title,
       productImage: product.thumbnail,
       productPrice: product.price,
