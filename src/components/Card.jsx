@@ -14,6 +14,7 @@ class Card extends React.Component {
     fichaTecnica: [],
     inputEmail: '',
     textarea: '',
+    rating: 0,
     avaliationInfo: [],
     inputValidation: false,
   };
@@ -29,7 +30,7 @@ class Card extends React.Component {
       productId: product.id,
     });
     const recoverInfo = await JSON.parse(localStorage.getItem(product.id));
-    console.log(recoverInfo);
+    // console.log(recoverInfo);
     this.setState({ avaliationInfo: recoverInfo });
     if (!localStorage.getItem(product.id)) {
       this.setState({ avaliationInfo: [] });
@@ -46,23 +47,29 @@ class Card extends React.Component {
     this.setState({ textarea: value });
   };
 
+  handleCheck = (event) => {
+    this.setState({ rating: event.target.value });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     const { inputEmail,
-      textarea, productId, avaliationInfo } = this.state;
-    if (inputEmail.length < 1 && textarea.length < 1) {
+      textarea, productId, avaliationInfo, rating } = this.state;
+    if (rating !== 0) {
+      this.setState({ inputValidation: false }, () => {
+        const products = [...avaliationInfo];
+        const product = {
+          email: inputEmail,
+          text: textarea,
+          rate: rating,
+        };
+        products.push(product);
+        localStorage.setItem(productId, JSON.stringify(products));
+        this.setState({ avaliationInfo: [...products], inputEmail: '', textarea: '' });
+      });
+    } else if (!(inputEmail.length > 0
+       && inputEmail.includes('@') && textarea.length > 0)) {
       this.setState({ inputValidation: true });
-    } else {
-      this.setState({ inputValidation: false });
-
-      const products = [...avaliationInfo];
-      const product = {
-        email: inputEmail,
-        text: textarea,
-      };
-      products.push(product);
-      localStorage.setItem(productId, JSON.stringify(products));
-      this.setState({ avaliationInfo: [...products], inputEmail: '', textarea: '' });
     }
   };
 
@@ -123,6 +130,61 @@ class Card extends React.Component {
                 onChange={ this.handleEmail }
               />
             </label>
+            <label htmlFor="one">
+              1
+              <input
+                data-testid="1-rating"
+                type="checkbox"
+                onChange={ this.handleCheck }
+                name="one"
+                value="1"
+                id="one"
+              />
+            </label>
+            <label htmlFor="two">
+              2
+              <input
+                data-testid="2-rating"
+                type="checkbox"
+                onChange={ this.handleCheck }
+                name="two"
+                value="2"
+                id="two"
+              />
+            </label>
+            <label htmlFor="three">
+              3
+              <input
+                data-testid="3-rating"
+                type="checkbox"
+                onChange={ this.handleCheck }
+                name="three"
+                value="3"
+                id="three"
+              />
+            </label>
+            <label htmlFor="four">
+              4
+              <input
+                data-testid="4-rating"
+                type="checkbox"
+                onChange={ this.handleCheck }
+                name="four"
+                value="4"
+                id="four"
+              />
+            </label>
+            <label htmlFor="five">
+              5
+              <input
+                data-testid="5-rating"
+                type="checkbox"
+                onChange={ this.handleCheck }
+                name="five"
+                value="5"
+                id="five"
+              />
+            </label>
             <textarea
               name=""
               value={ textarea }
@@ -150,6 +212,7 @@ class Card extends React.Component {
               <li key={ index }>
                 <div>
                   <p data-testid="review-card-email">{item.email}</p>
+                  <p data-testid="review-card-rating">{item.rate}</p>
                   <p data-testid="review-card-evaluation">{item.text}</p>
                 </div>
               </li>
