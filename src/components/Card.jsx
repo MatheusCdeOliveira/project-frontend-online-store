@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
+import { addItemAoCarrinho } from '../utils';
 
 import Header from './Header';
 
 class Card extends React.Component {
   state = {
+    productId: '',
     productName: '',
     productImage: '',
     productPrice: 0,
@@ -19,6 +21,7 @@ class Card extends React.Component {
     const product = await getProductById(id);
     console.log(product);
     this.setState({
+      productId: product.id,
       productName: product.title,
       productImage: product.thumbnail,
       productPrice: product.price,
@@ -31,20 +34,22 @@ class Card extends React.Component {
     this.setState({ carrinho });
   }
 
-  ClickLocalStorage = () => {
-    const { productName, productPrice, productImage, carrinho } = this.state;
-    const addCarrinho = [...carrinho];
-    const value = {
-      name: productName,
-      price: productPrice,
-      imagem: productImage,
-      quant: 1,
+  createItem = (id, title, price, thumbnail) => {
+    const item = {
+      id,
+      title,
+      price,
+      thumbnail,
     };
-    addCarrinho.push(value);
-    localStorage.setItem('carrinho', JSON.stringify(addCarrinho));
-    this.setState((prevState) => ({
-      carrinho: [...prevState.carrinho, value],
-    }));
+    return item;
+  };
+
+  ClickLocalStorage = () => {
+    const { productId, productName, productPrice, productImage, carrinho } = this.state;
+    const item = this.createItem(productId, productName, productPrice, productImage);
+    const newCarrinho = addItemAoCarrinho(item, carrinho);
+    localStorage.setItem('carrinho', JSON.stringify(newCarrinho));
+    this.setState({ carrinho: newCarrinho });
   };
 
   render() {

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { addItemAoCarrinho } from '../utils';
 
 import Header from './Header';
 import ListProduct from './ListProduct';
@@ -50,35 +51,12 @@ class Home extends React.Component {
     });
   };
 
-  criaNovoProdCarrinho = (item) => {
-    const value = {
-      id: item.id,
-      name: item.title,
-      price: item.price,
-      image: item.thumbnail,
-      quant: 1,
-    };
-    return value;
-  };
-
   HandleLocalStorage = ({ target }) => {
     const { productList, carrinho } = this.state;
     const item = productList.find((elem) => elem.id === target.id);
-    if (carrinho.length > 0) {
-      if (carrinho.some((elem) => elem.id === item.id)) {
-        carrinho.forEach((prod) => {
-          if (prod.id === item.id) prod.quant += 1;
-        });
-      } else {
-        const value = this.criaNovoProdCarrinho(item);
-        carrinho.push(value);
-      }
-    } else {
-      const value = this.criaNovoProdCarrinho(item);
-      carrinho.push(value);
-    }
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    this.setState({ carrinho });
+    const newCarrinho = addItemAoCarrinho(item, carrinho);
+    localStorage.setItem('carrinho', JSON.stringify(newCarrinho));
+    this.setState({ carrinho: newCarrinho });
   };
 
   render() {
