@@ -24,7 +24,6 @@ class Card extends React.Component {
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const product = await getProductById(id);
-    console.log(product);
     this.setState({
       productName: product.title,
       productImage: product.thumbnail,
